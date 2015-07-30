@@ -53,31 +53,12 @@ function buy_em_all() {
     var n = valid_tech_values.indexOf(cur_tech);
     console.log("Found cur_tech to be ", cur_tech, " and index as ", n);
     if (n < 0) {
-        var next_tech_jump = valid_tech_values.filter(
-                function(el, i, arr) {
-                    return (parseFloat(el) > parseFloat(cur_tech))
-                })[0];
-        console.log('next_tech_jump is ', next_tech_jump);
-        var question = 'You currently have ' + cur_tech + ' technology which is not among the standard increments. ' + 
-                        + 'The script will first buy tech to bring this to '
-                        + next_tech_jump + ' and then continue in the standard way.\n'
-                        + 'Press OK if this is what you want.\n" 
-                        + 'Press Cancel if you want to deal with things manually.\n";
-        if (confirm(question)) {
-            var to_buy = (parseFloat(el) - parseFloat(cur_tech)).toFixed(1).replace(/\.0$/);
-            make_purchase(to_buy);
-        }
-        else {
-            autobuy_button_container.show();
-            $("#greasy_msg").remove();
-            return;
-        }
+        standardize_tech_value(cur_tech);
+        return; //unnecessary since form submit would've happened, so just defensive coding
     }
 
-    GM_setValue('autobuying_going_on', true);
     buy_next_chunk(cur_tech);
 }
-
 
 function buy_next_chunk(cur_tech_value) {
     var n           = valid_tech_values.indexOf(cur_tech_value);
@@ -88,6 +69,7 @@ function buy_next_chunk(cur_tech_value) {
 }
 
 function make_purchase(to_buy) {
+    GM_setValue('autobuying_going_on', true);
     $('select[name="newpurchase"]').val(to_buy);
     purchase_button_container.find('input.Buttons').click();
 }
@@ -97,6 +79,28 @@ function get_cur_tech() {
     // What's with ID+nth-child specification on table17 you ask?
     // Why, there are _two_ #table17's, with same attributes but different content!
     return $('#table17:nth-child(2) > tbody > tr:nth-child(2) > td:nth-child(2)').text().trim();
+}
+
+function standardize_tech_value(cur_tech_value) {
+        var next_tech_jump = valid_tech_values.filter(
+                function(el, i, arr) {
+                    return (parseFloat(el) > parseFloat(cur_tech_value)
+                })[0];
+        console.log('next_tech_jump is ', next_tech_jump);
+        var question = 'You currently have ' + cur_tech_value+ ' technology which is not among the standard increments. ' + 
+                        + 'The script will first buy tech to bring this to '
+                        + next_tech_jump + ' and then continue in the standard way.\n'
+                        + 'Press OK if this is what you want.\n" 
+                        + 'Press Cancel if you want to deal with things manually.\n";
+        if (confirm(question)) {
+            var to_buy = (parseFloat(el) - parseFloat(cur_tech_value).toFixed(1).replace(/\.0$/);
+            make_purchase(to_buy);
+        }
+        else {
+            autobuy_button_container.show();
+            $("#greasy_msg").remove();
+            return;
+        }
 }
 
 function show_user_msg(msg_text, msg_color) {
