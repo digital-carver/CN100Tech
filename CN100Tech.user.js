@@ -71,7 +71,8 @@ function buy_next_chunk(cur_tech_value) {
 function make_purchase(to_buy) {
     GM_setValue('autobuying_going_on', true);
     $('select[name="newpurchase"]').val(to_buy);
-    purchase_button_container.find('input.Buttons').click();
+    // 3 seconds delay, to minimize partial-load bugs and reduce server load too
+    setTimeout(function() { purchase_button_container.find('input.Buttons').click(); }, 3000);
 }
 
 function get_cur_tech() {
@@ -91,7 +92,7 @@ function standardize_tech_value(cur_tech_value) {
                         + 'The script will first buy tech to bring this to '
                         + next_tech_jump + ' and then continue in the standard way.\n'
                         + 'Press OK if this is what you want.\n" 
-                        + 'Press Cancel if you want to deal with things manually.\n";
+                        + 'Press Cancel if you want to deal with things manually for some reason.\n";
         if (confirm(question)) {
             var to_buy = (parseFloat(el) - parseFloat(cur_tech_value).toFixed(1).replace(/\.0$/);
             make_purchase(to_buy);
