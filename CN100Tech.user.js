@@ -16,6 +16,7 @@ var purchase_increments = ['4.5', '10', '10', '5', '10', '10', '10', '10', '5', 
 
 // The <p> that contains the Purchase Tech button
 var purchase_button_container = $('#table13 >tbody > tr > td:nth-child(3) > p[align="center"]');
+console.log('Purchase tech button is ' + purchase_button_container);
 
 var cur_tech = get_cur_tech();
 if (parseFloat(cur_tech) >= 100) {
@@ -79,7 +80,9 @@ function get_cur_tech() {
     // Get current tech value
     // What's with ID+nth-child specification on table17 you ask?
     // Why, there are _two_ #table17's, with same attributes but different content!
-    return $('#table17:nth-child(2) > tbody > tr:nth-child(2) > td:nth-child(2)').text().trim();
+    var cur_tech_text = $('#table17:nth-child(2) > tbody > tr:nth-child(2) > td:nth-child(2)').text().trim();
+    console.log('Current tech: ' + cur_tech_text);
+    return cur_tech_text;
 }
 
 function standardize_tech_value(cur_tech_value) {
@@ -88,7 +91,7 @@ function standardize_tech_value(cur_tech_value) {
                     return (parseFloat(el) > parseFloat(cur_tech_value)
                 })[0];
         console.log('next_tech_jump is ', next_tech_jump);
-        var question = 'You currently have ' + cur_tech_value+ ' technology which is not among the standard increments. ' + 
+        var question = 'You currently have ' + cur_tech_value+ ' technology which is not among the standard increments. ' 
                         + 'The script will first buy tech to bring this to '
                         + next_tech_jump + ' and then continue in the standard way.\n'
                         + 'Press OK if this is what you want.\n" 
