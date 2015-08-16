@@ -73,7 +73,7 @@ function make_purchase(to_buy) {
     GM_setValue('autobuying_going_on', true);
     $('select[name="newpurchase"]').val(to_buy);
     // 3 seconds delay, to minimize partial-load bugs and reduce server load too
-    setTimeout(function() { purchase_button_container.find('input.Buttons').click(); }, 3000);
+    window.setTimeout(function() { purchase_button_container.find('input.Buttons').click(); }, 3000);
 }
 
 function get_cur_tech() {
@@ -88,16 +88,16 @@ function get_cur_tech() {
 function standardize_tech_value(cur_tech_value) {
         var next_tech_jump = valid_tech_values.filter(
                 function(el, i, arr) {
-                    return (parseFloat(el) > parseFloat(cur_tech_value)
+                    return (parseFloat(el) > parseFloat(cur_tech_value));
                 })[0];
         console.log('next_tech_jump is ', next_tech_jump);
         var question = 'You currently have ' + cur_tech_value+ ' technology which is not among the standard increments. ' 
                         + 'The script will first buy tech to bring this to '
                         + next_tech_jump + ' and then continue in the standard way.\n'
-                        + 'Press OK if this is what you want.\n" 
-                        + 'Press Cancel if you want to deal with things manually for some reason.\n";
+                        + 'Press OK if this is what you want.\n'
+                        + 'Press Cancel if you want to deal with things manually for some reason.\n';
         if (confirm(question)) {
-            var to_buy = (parseFloat(el) - parseFloat(cur_tech_value).toFixed(1).replace(/\.0$/);
+            var to_buy = (parseFloat(el) - parseFloat(cur_tech_value)).toFixed(1).replace(/\.0$/);
             make_purchase(to_buy);
         }
         else {
