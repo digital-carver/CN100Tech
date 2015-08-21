@@ -9,6 +9,10 @@
 // @grant       GM_setValue
 // @grant       GM_deleteValue
 // @require     http://code.jquery.com/jquery-1.11.3.min.js
+// @copyright   2015, SundaraRaman R (http://sundararaman.me)
+// @supportURL  mailto:sundar@abiteasier.in
+// @license     GNU General Public License Version 3; https://www.gnu.org/licenses/gpl.html
+// @oujs:author digital-carver
 // ==/UserScript==
 
 var valid_tech_values = ['0.00', '4.50', '14.50', '24.50', '29.50', '39.50', '49.50', '59.50', '69.50', '74.50', '84.50', '94.50', '100.00'];
