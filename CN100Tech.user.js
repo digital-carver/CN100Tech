@@ -3,7 +3,7 @@
 // @namespace   abiteasier.in
 // @description Buy 100 tech in the recommended increments, with one click
 // @include     http://www.cybernations.net/technology_purchase.asp?Nation_ID=*
-// @version     0.1
+// @version     0.5
 // @grant       GM_addStyle
 // @grant       GM_getValue
 // @grant       GM_setValue
